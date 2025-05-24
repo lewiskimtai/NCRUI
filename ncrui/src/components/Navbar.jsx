@@ -3,109 +3,60 @@ import { AppBar, TextField, InputAdornment, Toolbar, Avatar, Badge, IconButton, 
 import SearchIcon from "@mui/icons-material/Search";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import FlexBetween from "./FlexBetween";
 import { Menu as MenuIcon } from "@mui/icons-material";
 
+/**
+ * Navbar component that provides top-level navigation
+ * with search functionality, notifications, user profile, and settings.
+ */
 const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
-    const isSmallScreen = useMediaQuery("(max-width:600px)");
+    const isMobile = useMediaQuery("(max-width:600px)");
+    const isTablet = useMediaQuery("(max-width:1024px)");
 
     return (
-        <AppBar sx={{ position: "static", background: "none", boxShadow: "none", padding: isSmallScreen ? "10px 0px" : "5px 10px" }}>
-            <Toolbar sx={{ flexDirection: "row", justifyContent: "space-between", marginRight: isSmallScreen ? "50px" : "0px" }}>
+        <AppBar sx={styles.appBar}>
+            <Toolbar sx={styles.toolbar}>
                 {/* LEFT SIDE */}
-            
-                <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Box sx={styles.leftSection}>
                     <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)} >
                         <MenuIcon />
                     </IconButton>
                     <TextField
                         variant="outlined"
                         placeholder="Search here..."
-                        slotProps={{
-                            input: {
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <SearchIcon sx={{ fontSize: isSmallScreen ? "20px" : "20px" }} />
-                                    </InputAdornment>
-                                ),
-                            },
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <SearchIcon sx={styles.icon} />
+                                </InputAdornment>
+                            ),
                         }}
-                        sx={{
-                            width: { xs: "100px", sm: "150px", md: "300px" }, // Responsive width
-                            "& fieldset": { border: "none" },
-                            "& .MuiOutlinedInput-root": {
-                                borderRadius: "50px",
-                                backgroundColor: "#f0f0f0",
-                                fontSize: "14px",
-                                height: isSmallScreen ? "30px" : "40px",
-                            },
-                            "& .MuiInputBase-input": {
-                                fontSize: isSmallScreen ? "8px" : "14px",
-                                padding: isSmallScreen ? "10px 0px" : "10px 0px",
-                            },
-                        }}
+                        sx={styles.searchField(isMobile, isTablet)}
                     />
                 </Box>
 
                 {/* RIGHT SIDE */}
-                <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <IconButton sx={{ backgroundColor: "white", marginRight: "40px" ,
-                        width: isSmallScreen ? "30px" : "30px", height: isSmallScreen ? "30px" : "30px",
-                        justifyItems: "center", alignItems: "center" }}>
-                        <Badge
-                            badgeContent={12}
-                            sx={{
-                                "& .MuiBadge-badge": {
-                                    backgroundColor: "#f1da0a",
-                                    color: "white",
-                                    fontSize: isSmallScreen ? "10px" : "10px", // Adjust font size
-                                    height: isSmallScreen ? "14px" : "15px", // Adjust height
-                                    minWidth: isSmallScreen ? "14px" : "15px", // Adjust width
-                                    padding: isSmallScreen ? "0px" : "2px", // Adjust padding
-                                    transform: "scale(0.8) translate(50%, -50%)", // Moves badge slightly
-                                },
-                            }}
-                        >
-                            <NotificationsNoneOutlinedIcon sx={{ fontSize: isSmallScreen ? "20px" : "20px" }} />
+                <Box sx={styles.rightSection}>
+                    {/* Notifications */}
+                    <IconButton sx={styles.iconButton}>
+                        <Badge badgeContent={12} sx={styles.notificationBadge}>
+                            <NotificationsNoneOutlinedIcon sx={styles.icon} />
                         </Badge>
                     </IconButton>
 
-
-
-                    <Box >
-                        <Typography variant="h6" sx={{ color: "black", fontSize: isSmallScreen ? "10px" : "16px" }}>
-                            Hello, Brian
-                        </Typography>
-                        <Typography variant="subtitle2" sx={{ color: "gray", fontSize: isSmallScreen ? "7px" : "12px" }}>
-                            Project Originator
-                        </Typography>
+                    {/* User Info */}
+                    <Box>
+                        <Typography variant="h6" sx={styles.username(isMobile)}>Hello, Brian</Typography>
+                        <Typography variant="subtitle2" sx={styles.role(isMobile)}>Project Originator</Typography>
                     </Box>
 
+                    {/* User Avatar */}
+                    <Avatar alt="Brian" src="" sx={styles.avatar(isMobile)} />
 
-                    <Avatar
-                        alt="Brian"
-                        src="" // Replace with actual image URL
-                        sx={{ marginLeft: "10px", width: isSmallScreen ? "30px" : "30px", height: isSmallScreen ? "30px" : "30px" }}
-                    />
-
-                    <IconButton sx={{ marginLeft: 2, backgroundColor: "darkblue", 
-                        width: isSmallScreen ? "30px" : "30px", height: isSmallScreen ? "30px" : "30px",
-                        justifyItems: "center", alignItems: "center" }}>
-                        <Badge
-                            badgeContent={"!"}
-                            sx={{
-                                "& .MuiBadge-badge": {
-                                    backgroundColor: "red",
-                                    color: "white",
-                                    fontSize: isSmallScreen ? "10px" : "10px", // Adjust font size
-                                    height: isSmallScreen ? "14px" : "15px", // Adjust height
-                                    minWidth: isSmallScreen ? "14px" : "15px", // Adjust width
-                                    padding: isSmallScreen ? "0px" : "2px", // Adjust padding
-                                    transform: "scale(0.8) translate(50%, -50%)", // Moves badge slightly
-                                },
-                            }}
-                        >
-                            <SettingsOutlinedIcon sx={{ color: "white", fontSize: isSmallScreen ? "20px" : "20px" }} />
+                    {/* Settings */}
+                    <IconButton sx={styles.settingsButton}>
+                        <Badge badgeContent="!" sx={styles.settingsBadge}>
+                            <SettingsOutlinedIcon sx={styles.settingsIcon} />
                         </Badge>
                     </IconButton>
                 </Box>
@@ -115,3 +66,93 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
 };
 
 export default Navbar;
+
+/**
+ * Centralized styling for better readability and maintenance
+ */
+const styles = {
+    appBar: {
+        position: "static",
+        background: "none",
+        boxShadow: "none",
+        padding: "10px 0",
+    },
+    toolbar: {
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+    },
+    leftSection: {
+        display: "flex",
+        alignItems: "center",
+        gap: 2,
+    },
+    searchField: (isMobile, isTablet) => ({
+        width: isMobile ? "100px" : isTablet ? "150px" : "300px",
+        "& fieldset": { border: "none" },
+        "& .MuiOutlinedInput-root": {
+            borderRadius: "50px",
+            backgroundColor: "#f0f0f0",
+            fontSize: "14px",
+            height: isMobile ? "30px" : "40px",
+        },
+        "& .MuiInputBase-input": {
+            fontSize: isMobile ? "10px" : "14px",
+            padding: "10px",
+        },
+    }),
+    rightSection: {
+        display: "flex",
+        alignItems: "center",
+        gap: 2,
+    },
+    iconButton: {
+        backgroundColor: "white",
+    },
+    notificationBadge: {
+        "& .MuiBadge-badge": {
+            backgroundColor: "#f1da0a",
+            color: "white",
+            fontSize: "10px",
+            height: "14px",
+            minWidth: "14px",
+            padding: "2px",
+            transform: "scale(0.8) translate(50%, -50%)",
+        },
+    },
+    username: (isMobile) => ({
+        color: "black",
+        fontSize: isMobile ? "10px" : "16px",
+    }),
+    role: (isMobile) => ({
+        color: "gray",
+        fontSize: isMobile ? "7px" : "12px",
+    }),
+    avatar: (isMobile) => ({
+        marginLeft: "10px",
+        width: isMobile ? "30px" : "40px",
+        height: isMobile ? "30px" : "40px",
+    }),
+    settingsButton: {
+        marginLeft: 2,
+        backgroundColor: "darkblue",
+    },
+    settingsBadge: {
+        "& .MuiBadge-badge": {
+            backgroundColor: "red",
+            color: "white",
+            fontSize: "10px",
+            height: "14px",
+            minWidth: "14px",
+            padding: "2px",
+            transform: "scale(0.8) translate(50%, -50%)",
+        },
+    },
+    settingsIcon: {
+        color: "white",
+        fontSize: "20px",
+    },
+    icon: {
+        fontSize: "20px",
+    },
+};

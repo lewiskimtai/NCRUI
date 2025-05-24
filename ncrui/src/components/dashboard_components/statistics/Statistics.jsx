@@ -6,6 +6,10 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
+/**
+ * Statistics data array with details for different metrics.
+ * Includes period-based data, percentage changes, icons, and styling colors.
+ */
 const statistics = [
     {
         title: 'Total Registered Projects',
@@ -56,63 +60,48 @@ const statistics = [
 
 const Statistics = () => {
     const [selectedPeriod, setSelectedPeriod] = useState('Today');
-    const isSmallScreen = useMediaQuery("(max-width:600px)");
+    const isMobile = useMediaQuery("(max-width: 320px)");
+    const isTablet = useMediaQuery("(max-width:1024px)");
 
     return (
-        <Box sx={{ backgroundColor: "white", padding: "20px", borderRadius: "20px", width: "1010px" }}>
-            <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Box sx={styles.container}>
+            {/* Header section */}
+            <Box sx={styles.header}>
                 <Box>
-                    <Typography style={{ fontSize: "15px", fontWeight: "bold" }}>Statistics</Typography>
-                    <Typography style={{ fontSize: "12px", color: "#717171", fontWeight: "lighter" }}>Dashboard Summary</Typography>
+                    <Typography sx={styles.title}>Statistics</Typography>
+                    <Typography sx={styles.subtitle}>Dashboard Summary</Typography>
                 </Box>
                 {/* Dropdown for selecting period */}
                 <Select
                     value={selectedPeriod}
                     onChange={(e) => setSelectedPeriod(e.target.value)}
                     size="small"
-                    sx={{
-                        height: "30px",
-                        backgroundColor: "green",
-                        color: "white",
-                        borderRadius: "20px",
-                        fontSize: "12px",
-                        "& .MuiOutlinedInput-notchedOutline": {
-                            borderColor: "transparent",
-                        },
-                        "&:hover .MuiOutlinedInput-notchedOutline": {
-                            borderColor: "transparent",
-                        },
-                        "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                            borderColor: "transparent",
-                        },
-                        "& .MuiSvgIcon-root": {
-                            color: "white", // Changes the dropdown arrow color
-                        }
-                    }}
+                    sx={styles.select}
                 >
-                    <MenuItem value="Today">Today</MenuItem>
-                    <MenuItem value="Past Week">Past Week</MenuItem>
-                    <MenuItem value="Past Month">Past Month</MenuItem>
-                    <MenuItem value="Past Year">Past Year</MenuItem>
+                    {['Today', 'Past Week', 'Past Month', 'Past Year'].map(period => (
+                        <MenuItem key={period} value={period}>
+                            {period}
+                        </MenuItem>
+                    ))}
                 </Select>
-
             </Box>
 
-            <Box mt={2} display={"flex"} flexDirection={"row"} gap={1}>
+            {/* Statistics cards section */}
+            <Box sx={{ ...styles.grid, flexDirection: isMobile ? 'row' : isTablet ? 'row' : 'row' }}>
                 {statistics.map((stat, index) => (
-                    <Box key={index} sx={{ backgroundColor: stat.color, width: "185px", height: "100px", borderRadius: "10px", padding: "10px" }}>
-                        <Box display="flex" flexDirection={"column"}>
-                            <Box display="flex" flexDirection={"row"} justifyContent={"space-between"}>
-                                <Typography style={{ fontSize: "12px", color: "rgb(159, 159, 159)", width: "120px" }}>{stat.title}</Typography>
+                    <Box key={index} sx={{ ...styles.statCard, backgroundColor: stat.color }}>
+                        <Box display="flex" flexDirection="column">
+                            <Box sx={styles.cardHeader}>
+                                <Typography sx={styles.statTitle}>{stat.title}</Typography>
                                 <Avatar sx={{ backgroundColor: stat.bgcolor, color: stat.color }}>
                                     {stat.icon}
                                 </Avatar>
                             </Box>
-                            <Typography style={{ fontSize: "20px", fontWeight: "bolder" }}>{stat.periodData[selectedPeriod]}</Typography>
-                            <Box display="flex" alignItems="center" gap={"5px"}>
+                            <Typography sx={styles.statValue}>{stat.periodData[selectedPeriod]}</Typography>
+                            <Box sx={styles.changeContainer}>
                                 <MovingIcon sx={{ color: "green" }} />
-                                <Typography style={{ fontSize: "11px", color: "green" }}>{stat.percentage}</Typography>
-                                <Typography style={{ fontSize: "11px", color: "rgb(159, 159, 159)" }}>{stat.change}</Typography>
+                                <Typography sx={styles.changeText}>{stat.percentage}</Typography>
+                                <Typography sx={styles.changeLabel}>{stat.change}</Typography>
                             </Box>
                         </Box>
                     </Box>
@@ -123,3 +112,82 @@ const Statistics = () => {
 };
 
 export default Statistics;
+
+/**
+ * Styled-components using MUI's `sx` prop
+ */
+const styles = {
+    container: {
+        backgroundColor: "white",
+        padding: "20px",
+        borderRadius: "20px",
+        width: "100%",
+        maxWidth: "1010px",
+        margin: "auto",
+    },
+    header: {
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+    },
+    title: {
+        fontSize: "15px",
+        fontWeight: "bold",
+    },
+    subtitle: {
+        fontSize: "12px",
+        color: "#717171",
+        fontWeight: "lighter",
+    },
+    select: {
+        height: "30px",
+        backgroundColor: "green",
+        color: "white",
+        borderRadius: "20px",
+        fontSize: "12px",
+        "& .MuiOutlinedInput-notchedOutline": {
+            borderColor: "transparent",
+        },
+        "& .MuiSvgIcon-root": {
+            color: "white",
+        }
+    },
+    grid: {
+        mt: 2,
+        display: "flex",
+        gap: 1,
+        flexWrap: "wrap",
+    },
+    statCard: {
+        width: "170px",
+        height: "100px",
+        borderRadius: "10px",
+        padding: "10px",
+    },
+    cardHeader: {
+        display: "flex",
+        justifyContent: "space-between",
+    },
+    statTitle: {
+        fontSize: "12px",
+        color: "rgb(159, 159, 159)",
+        width: "120px",
+    },
+    statValue: {
+        fontSize: "20px",
+        fontWeight: "bolder",
+    },
+    changeContainer: {
+        display: "flex",
+        alignItems: "center",
+        gap: "5px",
+    },
+    changeText: {
+        fontSize: "11px",
+        color: "green",
+    },
+    changeLabel: {
+        fontSize: "11px",
+        color: "rgb(159, 159, 159)",
+    }
+};

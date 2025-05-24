@@ -91,21 +91,52 @@ const projectData = {
     ],
 };
 
+function generateMonthlyData(approvedBase, pendingBase, rejectedBase) {
+    const months = [
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+    return months.map((month, index) => ({
+        month,
+        approved: approvedBase + (index % 3) * 5,
+        pending: pendingBase - (index % 4) * 2,
+        rejected: rejectedBase + (index % 5),
+    }));
+}
 
 const Projects = () => {
     const [selectedSector, setSelectedSector] = useState(Object.keys(projectData)[0]);
 
     return (
-        <Box sx={{ backgroundColor: "white", padding: "10px 10px", borderRadius: "20px", width: "1030px", 
-        gap: "20px", display: "flex", flexDirection: "column"}}>
-           
-            
-                <Typography style={{ fontSize: "15px", fontWeight: "bold" }}>Projects Overview</Typography>
-                <SectorSelector selectedSector={selectedSector} setSelectedSector={setSelectedSector} data={projectData} />
-                <ChartComponent data={projectData[selectedSector]} />
-           
-            </Box>
+        <Box sx={styles.container}>
+            {/* Header */}
+            <Typography sx={styles.title}>Projects Overview</Typography>
+
+            {/* Sector Selector & Chart */}
+            <SectorSelector selectedSector={selectedSector} setSelectedSector={setSelectedSector} data={projectData} />
+            <ChartComponent data={projectData[selectedSector]} />
+        </Box>
     );
 };
 
 export default Projects;
+
+/**
+ * Centralized styles for better readability and maintenance.
+ */
+const styles = {
+    container: {
+        backgroundColor: "white",
+        padding: "20px",
+        borderRadius: "20px",
+        width: "100%",
+        maxWidth: "1010px",
+        display: "flex",
+        flexDirection: "column",
+        gap: "20px",
+    },
+    title: {
+        fontSize: "15px",
+        fontWeight: "bold",
+    },
+};

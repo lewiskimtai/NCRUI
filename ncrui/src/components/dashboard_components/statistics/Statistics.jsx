@@ -123,7 +123,6 @@ const styles = {
         borderRadius: "20px",
         width: "100%",
         maxWidth: "1010px",
-        margin: "auto",
     },
     header: {
         display: "flex",

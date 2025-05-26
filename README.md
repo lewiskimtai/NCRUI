@@ -94,6 +94,7 @@ Make sure you have the following installed on your machine:
 The project follows a standard React application structure, organized for clarity and maintainability.
 
 
+```bash
 NCRUI/
 ├── public/
 ├── src/

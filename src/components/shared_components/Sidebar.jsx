@@ -23,7 +23,7 @@ import {
     Favorite as FavoriteIcon,
     ChevronLeft,
 } from "@mui/icons-material";
-import nemaImage from "./nema.jpg"; // Adjust path as necessary
+import nemaImage from "../../assets/images/nema.jpg"; // Adjust path as necessary
 
 /**
  * Sidebar component for navigation with responsive behavior.

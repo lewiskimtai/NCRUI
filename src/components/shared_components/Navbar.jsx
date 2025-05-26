@@ -10,17 +10,20 @@ import { Menu as MenuIcon } from "@mui/icons-material";
  * with search functionality, notifications, user profile, and settings.
  */
 const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
-    const isMobile = useMediaQuery("(max-width:600px)");
+    const isMobile = useMediaQuery("(max-width:400px)");
     const isTablet = useMediaQuery("(max-width:1024px)");
 
     return (
-        <AppBar sx={styles.appBar}>
-            <Toolbar sx={styles.toolbar}>
+        <AppBar sx={{ ...styles.appBar, width: isMobile ? "400px" : "99%" }}>
+            <Toolbar sx={styles.toolbar }>
+
                 {/* LEFT SIDE */}
                 <Box sx={styles.leftSection}>
-                    <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)} >
-                        <MenuIcon />
-                    </IconButton>
+                    {isMobile && (
+                        <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)} >
+                            <MenuIcon />
+                        </IconButton>
+                    )}
                     <TextField
                         variant="outlined"
                         placeholder="Search here..."
@@ -76,9 +79,11 @@ const styles = {
         background: "none",
         boxShadow: "none",
         padding: "10px 0",
+        // width should be set dynamically in the component, not here
     },
     toolbar: {
         display: "flex",
+        flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
     },

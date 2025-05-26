@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import SectorSelector from "./Selector";
 import ChartComponent from "./Barchart";
 

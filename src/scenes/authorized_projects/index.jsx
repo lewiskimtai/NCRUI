@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material'
 import React from 'react'
-import Dashboard from '../../components/projectscomponents/cards'
+import Dashboard from '../../components/projects_components/cards'
 
 const Authorizedprojects = () => {
     return (

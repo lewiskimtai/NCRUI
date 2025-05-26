@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Box, useMediaQuery } from '@mui/material';
 import { Outlet } from 'react-router-dom';
-import Navbar from '../../components/Navbar';
-import Sidebar from '../../components/Sidebar';
+import Navbar from '../../components/shared_components/Navbar';
+import Sidebar from '../../components/shared_components/Sidebar';
 
 /**
  * Layout component manages sidebar visibility and responsiveness.
@@ -13,7 +13,7 @@ const Layout = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
     return (
-        <Box sx={styles.container}>
+        <Box sx={styles.container }>
             
             {/* Sidebar */}
             <Sidebar
@@ -41,7 +41,6 @@ export default Layout;
 const styles = {
     container: {
         display: "flex",
-        width: "100%",
         height: "100%",
         backgroundColor: "#EDEADE",
     },

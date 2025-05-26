@@ -1,10 +1,9 @@
 import React from "react";
 import { Box } from "@mui/material";
 import Statistics from "../../components/dashboard_components/statistics/Statistics";
-import Projects from "../../components/dashboard_components/Projectsoverview/Projectsoverview";
-import Userinsights from "../../components/dashboard_components/UserInsights/Userinsights";
-import Kenya from "@react-map/kenya";
-import Activeprojects from "../../components/dashboard_components/Activeprojects/Activeprojects";
+import Projects from "../../components/dashboard_components/projects_overview/Projectsoverview";
+import Userinsights from "../../components/dashboard_components/user_insights/Userinsights";
+import Activeprojects from "../../components/dashboard_components/active_projects/Activeprojects";
 
 /**
  * Dashboard component providing an overview of project statistics, user insights, and active projects.

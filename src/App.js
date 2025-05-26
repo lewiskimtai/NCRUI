@@ -1,7 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Layout from "./scenes/layout";
 import Dashboard from "./scenes/dashboard";
-import Authorizedprojects from "./scenes/authorizedprojects";
+import Authorizedprojects from "./scenes/authorized_projects";
 
 function App() {
   return (
